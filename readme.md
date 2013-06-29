@@ -1,4 +1,4 @@
-#Laravel Grid DataProvider#
+#Laravel Message#
 
 ##Installation##
 
@@ -34,7 +34,7 @@ public function getIndex(){
 ```
 
 The response will be like this
-```json
+```js
 {
     header:{
         status: 200,
@@ -52,9 +52,9 @@ Thow Error Exception to Json Response
 ```php
 public function testExceptioons()
     {
-        thow new PermissionException(Message::permission($message));
-        thow new AuthenticateException(Message::auth($message));
-        thow new NoutFoundException(Message::notfound($message));
-        thow new ValidationException(Message::validation($errors));
+        throw new PermissionException(Message::permission($message));
+        throw new AuthenticateException(Message::auth($message));
+        throw new NoutFoundException(Message::notfound($message));
+        throw new ValidationException(Message::validation($errors));
     }
 ```
