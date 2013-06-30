@@ -86,6 +86,10 @@ class Message
         );
     }
 
+    /**
+     * @param $data
+     * @return array|null
+     */
     public function raw($data)
     {
         $this->clear();
@@ -99,7 +103,12 @@ class Message
         return $this->toArray();
     }
 
-    public function success($data, array $header = array())
+    /**
+     * @param \Illuminate\Support\Collection|array $data
+     * @param array $header
+     * @return array|null
+     */
+    public function success($data = array(), array $header = array())
     {
         $this->clear();
         if ($data instanceof ArrayableInterface) {
@@ -116,6 +125,11 @@ class Message
         return $this->toArray();
     }
 
+    /**
+     * @param string $message
+     * @param array $header
+     * @return array|null
+     */
     public function permission($message = 'Permission Denied', $header = array())
     {
         $this->clear();
@@ -128,10 +142,20 @@ class Message
         return $this->toArray();
     }
 
+    /**
+     * @param $message
+     * @param \Illuminate\Support\Collection|array $data
+     * @param array $header
+     * @return array|null
+     */
     public function error($message, array $data = array(), array $header = array())
     {
         $this->clear();
-        $this->body = $data;
+        if ($data instanceof ArrayableInterface) {
+            $this->body = $data->toArray();
+        } else {
+            $this->body = $data;
+        }
         $this->header = array(
             'status' => self::ERROR,
             'message' => 'Error',
@@ -142,6 +166,11 @@ class Message
         return $this->toArray();
     }
 
+    /**
+     * @param \Illuminate\Support\Collection|array $data
+     * @param array $header
+     * @return array|null
+     */
     public function validation($data = array(), array $header = array())
     {
         $this->clear();
@@ -159,6 +188,11 @@ class Message
         return $this->toArray();
     }
 
+    /**
+     * @param string $message
+     * @param array $header
+     * @return array|null
+     */
     public function auth($message = 'Authenticate is required', array $header = array())
     {
         $this->clear();
@@ -171,6 +205,11 @@ class Message
         return $this->toArray();
     }
 
+    /**
+     * @param string $message
+     * @param array $header
+     * @return string
+     */
     public function notfound($message = 'The request not found', $header = array())
     {
         $this->clear();
@@ -184,6 +223,9 @@ class Message
         return $this->toJson();
     }
 
+    /**
+     *
+     */
     public function clear()
     {
         $this->body = null;
@@ -191,6 +233,9 @@ class Message
         $this->isRaw = false;
     }
 
+    /**
+     * @return array|null
+     */
     public function toArray()
     {
         if ($this->isRaw) {
@@ -208,6 +253,10 @@ class Message
         return $arr;
     }
 
+    /**
+     * @param int $options
+     * @return string
+     */
     public function toJson($options = 0)
     {
         return json_encode($this->toArray(), $options);
