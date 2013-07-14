@@ -32,58 +32,6 @@ class Message
         $this->header = null;
         $this->body = null;
         $this->isRaw = false;
-
-        App::error(
-            function (ValidateException $exception, $code) {
-                $res = Response::make($exception->getMessage(), $code);
-                $res->headers->add(
-                    array(
-                        'Content-Type' => 'application/json'
-                    )
-                );
-
-                return $res;
-            }
-        );
-
-        App::error(
-            function (AuthenticateException $exception, $code) {
-                $res = Response::make($exception->getMessage(), $code);
-                $res->headers->add(
-                    array(
-                        'Content-Type' => 'application/json'
-                    )
-                );
-
-                return $res;
-            }
-        );
-
-        App::error(
-            function (NotFoundException $exception, $code) {
-                $res = Response::make($exception->getMessage(), $code);
-                $res->headers->add(
-                    array(
-                        'Content-Type' => 'application/json'
-                    )
-                );
-
-                return $res;
-            }
-        );
-
-        App::error(
-            function (PermissionException $exception, $code) {
-                $res = Response::make($exception->getMessage(), $code);
-                $res->headers->add(
-                    array(
-                        'Content-Type' => 'application/json'
-                    )
-                );
-
-                return $res;
-            }
-        );
     }
 
     /**
